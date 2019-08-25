@@ -2,46 +2,55 @@
 
 import sys
 import time
-import Adafruit_DHT
-import requests #on Windows python -m pip install requests
+#import Adafruit_DHT
+#import requests
 
-sensor = Adafruit_DHT.DHT22
+#sensor = Adafruit_DHT.DHT22
 pin = 14
+btn_wifi_reset = 15
 interval = 2
 
 time.sleep(interval)
 
+wifi_reset = 0
 
-#f=open("guru99.txt","a+")
-#Open the file back and read the contents
-#f=open("guru99.txt", "r")
-    #if f.mode == 'r':
-    #   contents =f.read()
-    #    print (contents)
-    #or, readlines reads the individual line into a list
-    #fl =f.readlines()
-    #for x in fl:
-    #print(x)
+if(btn_wifi_reset == 1):
 
-while(1):
+    wifi_reset = 1
+
+if (wifi_reset == 1):
+
+    startup = open("/etc/rc.local", "w+")
+    startup.write('#Startup 2\nsudo python /home/pi/VinosIOT/code.py &\n')
+    startup.close()
     
-    humidity, temperature = Adafruit_DHT.read_retry(sensor, pin)
-    
-    if humidity is not None and temperature is not None:
-        print('Temp={0:0.1f}  Humidity={1:0.1f}%'.format(temperature, humidity))
-        
-        url = "http://ec2-18-228-191-79.sa-east-1.compute.amazonaws.com:8080/api/medicao"
-        payload = "{\n\t\"umidade\": \""+ str(humidity) +"\",\n\"temperatura\": \""+ str(temperature) +"\"\n}"
-        headers = {'Content-Type': "application/json",'cache-control': "no-cache"}
+    os.system("sudo reboot")
 
-        response = requests.request("POST", url, data=payload, headers=headers)        
+else:
+
+    ulr_file = open("ulr.txt", "r")
+    ulr = f.read()
+    ulr_file.close()
+
+    while(1):
         
-        if (response.status_code == 200):
-            print("Data Sent\n")
+        humidity, temperature = Adafruit_DHT.read_retry(sensor, pin)
+        
+        if humidity is not None and temperature is not None:
+            print('Temp={0:0.1f}  Humidity={1:0.1f}%'.format(temperature, humidity))
+            
+            #url = "http://ec2-18-228-191-79.sa-east-1.compute.amazonaws.com:8080/api/medicao"
+            payload = "{\n\t\"umidade\": \""+ str(humidity) +"\",\n\"temperatura\": \""+ str(temperature) +"\"\n}"
+            headers = {'Content-Type': "application/json",'cache-control': "no-cache"}
+
+            response = requests.request("POST", url, data=payload, headers=headers)        
+            
+            if (response.status_code == 200):
+                print("Data Sent\n")
+            else:
+                print("Error While Sending Data\n")
+            
+            time.sleep(interval)
         else:
-            print("Error While Sending Data\n")
-        
-        time.sleep(interval)
-    else:
-        print('Failed to get reading')
-        time.sleep(interval)
+            print('Failed to get reading')
+            time.sleep(interval)
