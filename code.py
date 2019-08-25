@@ -2,25 +2,19 @@
 
 import sys
 import time
-#import Adafruit_DHT
-#import requests
+import Adafruit_DHT
+import requests
 
-#sensor = Adafruit_DHT.DHT22
+sensor = Adafruit_DHT.DHT22
 pin = 14
-btn_wifi_reset = 15
+btn_reset = 15
 interval = 2
 
-time.sleep(interval)
+time.sleep(10)
 
-wifi_reset = 0
+reset = GPIO.input(btn_reset)
 
-#click do botao vai aqui
-
-if(btn_wifi_reset == 1):
-
-    wifi_reset = 1
-
-if (wifi_reset == 1):
+if (reset == 1):
 
     startup = open("/etc/rc.local", "w+")
     startup.write('#Startup 2\nsudo python /home/pi/VinosIOT/code.py &\n')
@@ -34,18 +28,20 @@ else:
     ulr = f.read()
     ulr_file.close()
 
+    time.sleep(interval)
+
     while(1):
         
         humidity, temperature = Adafruit_DHT.read_retry(sensor, pin)
         
         if humidity is not None and temperature is not None:
+
             print('Temp={0:0.1f}  Humidity={1:0.1f}%'.format(temperature, humidity))
             
-            #url = "http://ec2-18-228-191-79.sa-east-1.compute.amazonaws.com:8080/api/medicao"
             payload = "{\n\t\"umidade\": \""+ str(humidity) +"\",\n\"temperatura\": \""+ str(temperature) +"\"\n}"
             headers = {'Content-Type': "application/json",'cache-control': "no-cache"}
 
-            response = requests.request("POST", url, data=payload, headers=headers)        
+            response = requests.request("POST", url, data = payload, headers = headers)        
             
             if (response.status_code == 200):
                 print("Data Sent\n")
