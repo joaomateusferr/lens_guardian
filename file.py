@@ -23,8 +23,9 @@ config = open("wifi_config.txt", "w+")
 config.write('1')
 config.close()
 
-startup = open("/etc/rc.local", "w+")
-startup.write('#Startup 2\nsudo python /home/pi/code.py &\n')
+#startup = open("/etc/rc.local", "w+")
+#startup.write('#Startup 2\nsudo python /home/pi/code.py &\n')
+#startup.close()
 
 
 
