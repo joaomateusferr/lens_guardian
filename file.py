@@ -16,7 +16,7 @@ ssid = raw_input('SSID: ')
 senha = raw_input('Senha: ')
 
 network = open("wifi.conf", "w+")
-network.write('\nnetwork = {\n\tssid = "%s"\n\tpsk = "%s"\n}' % (ssid,senha))
+network.write('ctrl_interface=/var/run/wpa_supplicant\nupdate_config=1\n\nnetwork = {\n\tssid = "%s"\n\tpsk = "%s"\n}' % (ssid,senha))
 network.close()
 
 config = open("wifi_config.txt", "w+")
