@@ -8,7 +8,20 @@ import requests #on Windows python -m pip install requests
 sensor = Adafruit_DHT.DHT22
 pin = 14
 interval = 2
+
 time.sleep(interval)
+
+
+#f=open("guru99.txt","a+")
+#Open the file back and read the contents
+#f=open("guru99.txt", "r")
+    #if f.mode == 'r':
+    #   contents =f.read()
+    #    print (contents)
+    #or, readlines reads the individual line into a list
+    #fl =f.readlines()
+    #for x in fl:
+    #print(x)
 
 while(1):
     
