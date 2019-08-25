@@ -19,6 +19,5 @@ startup = open("/etc/rc.local", "w+")
 startup.write('#Startup\nsudo python /home/pi/VinosIOT/inicial.py &\nexit 0')
 startup.close()
 
-#falta desiligar a interface grafica aqui
-
+os.system("sudo raspi-config nonint do_boot_behaviour B2")
 os.system("sudo reboot")
