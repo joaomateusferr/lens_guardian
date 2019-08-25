@@ -12,7 +12,7 @@ network.close()
 
 #login no vinos aqui
 
-#selecionar qual dispositivo sera usado
+#selecionar qual dispositivo sera usado para gerar a ulr
 
 ulr_file = open("ulr.txt", "w+")
 ulr_file.write('http://ec2-18-228-191-79.sa-east-1.compute.amazonaws.com:8080/api/medicao')

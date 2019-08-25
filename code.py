@@ -14,6 +14,8 @@ time.sleep(interval)
 
 wifi_reset = 0
 
+#click do botao vai aqui
+
 if(btn_wifi_reset == 1):
 
     wifi_reset = 1
