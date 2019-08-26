@@ -3,21 +3,26 @@
 import sys
 import time
 import Adafruit_DHT
+import RPi.GPIO as GPIO
 import requests
 
-sensor = Adafruit_DHT.DHT22
-pin = 14
+sensor_type = Adafruit_DHT.DHT22
+sensor_pin = 14
 btn_reset = 15
 interval = 2
 
 time.sleep(10)
 
-reset = GPIO.input(btn_reset)
+#http://razzpisampler.oreilly.com/ch07.html
 
-if (reset == 1):
+GPIO.setmode(GPIO.BCM)
+GPIO.setup(btn_reset, GPIO.IN, pull_up_down = GPIO.PUD_UP)
+reset  = GPIO.input(btn_reset)
+
+if (reset == False):
 
     startup = open("/etc/rc.local", "w+")
-    startup.write('#Startup 2\nsudo python /home/pi/VinosIOT/code.py &\n')
+    startup.write('#Startup\nsudo python /home/pi/VinosIOT/inicial.py &\nexit 0')
     startup.close()
     
     os.system("sudo reboot")
@@ -32,7 +37,7 @@ else:
 
     while(1):
         
-        humidity, temperature = Adafruit_DHT.read_retry(sensor, pin)
+        humidity, temperature = Adafruit_DHT.read_retry(sensor_type, sensor_pin)
         
         if humidity is not None and temperature is not None:
 
