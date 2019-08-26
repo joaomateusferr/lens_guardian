@@ -15,6 +15,8 @@ os.chdir("/home/pi/")
 
 os.system("git clone https://github.com/joaomateusferr/VinosIOT.git")
 
+os.system("sudo apt-get install python-rpi.gpio python3-rpi.gpio")
+
 startup = open("/etc/rc.local", "w+")
 startup.write('#Startup\nsudo python /home/pi/VinosIOT/inicial.py &\nexit 0')
 startup.close()
