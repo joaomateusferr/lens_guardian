@@ -5,7 +5,7 @@ print("Fill in the  WIFI data!")
 ssid = raw_input('SSID: ')
 wifi_password = raw_input('Password: ')
 
-network = open("/etc/wpa_supplicant/wpa_supplicant.conf, "w+") raspberypi
+network = open("/etc/wpa_supplicant/wpa_supplicant.conf", "w+")
 network.write('ctrl_interface=DIR=/var/run/wpa_supplicant GROUP = netdev\nupdate_config = 1\n\nnetwork = {\n\tssid = "%s"\n\tpsk = "%s"\n}' % (ssid,wifi_password))
 network.close()
 
