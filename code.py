@@ -1,6 +1,7 @@
 #!/usr/bin/python
 
 import sys
+import os
 import time
 import Adafruit_DHT
 import RPi.GPIO as GPIO
@@ -40,9 +41,9 @@ if (reset == False):
 
     time.sleep(10)
 
-    startup = open("/etc/rc.local", "w+")
-    startup.write('#Startup\nsudo python /home/pi/VinosIOT/inicial.py &\nexit 0')
-    startup.close()
+    os.system("sudo echo '#Startup 2' | sudo tee /etc/rc.local")
+    os.system("sudo echo 'sudo python /home/pi/VinosIOT/inicial.py &' | sudo tee -a /etc/rc.local")
+    os.system("sudo echo 'exit 0' | sudo tee -a /etc/rc.local")
     
     os.system("sudo reboot")
 

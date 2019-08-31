@@ -32,9 +32,8 @@ ulr_file = open("ulr.txt", "w+")
 ulr_file.write('http://ec2-18-228-191-79.sa-east-1.compute.amazonaws.com:8080/api/medicao')
 ulr_file.close()
 
-os.chmod("/etc/rc.local", 0o777)
-startup = open("/etc/rc.local", "w+")
-startup.write('#Startup 2\nsudo python /home/pi/VinosIOT/code.py &\n')
-startup.close()
+os.system("sudo echo '#Startup 2' | sudo tee /etc/rc.local")
+os.system("sudo echo 'sudo python /home/pi/VinosIOT/code.py &' | sudo tee -a /etc/rc.local")
+os.system("sudo echo 'exit 0' | sudo tee -a /etc/rc.local")
 
 os.system("sudo reboot")
