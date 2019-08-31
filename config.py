@@ -17,10 +17,9 @@ os.system("git clone https://github.com/joaomateusferr/VinosIOT.git")
 
 os.system("sudo apt-get install python-rpi.gpio python3-rpi.gpio")
 
-os.chmod("/etc/rc.local", 0o777)
-startup = open("/etc/rc.local", "w+")
-startup.write('#Startup\nsudo python /home/pi/VinosIOT/inicial.py &\nexit 0')
-startup.close()
+os.system("sudo echo '#Startup' | sudo tee /etc/rc.local")
+os.system("sudo echo 'sudo python /home/pi/VinosIOT/inicial.py &' | sudo tee -a /etc/rc.local")
+os.system("sudo echo 'exit 0' | sudo tee -a /etc/rc.local")
 
 os.system("sudo raspi-config nonint do_boot_behaviour B2")
 os.system("sudo reboot")
