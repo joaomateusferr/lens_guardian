@@ -1,4 +1,7 @@
 import os
+import time
+
+time.sleep(30)
 
 print("Fill in the  WIFI data!")
 
