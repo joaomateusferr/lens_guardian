@@ -8,7 +8,7 @@ os.chdir("/home/pi/Adafruit_Python_DHT")
 os.system("sudo python setup.py install") 
 os.chdir("/home/pi/")
 
-os.system("clone git://github.com/kennethreitz/requests.git")
+os.system("git clone git://github.com/kennethreitz/requests.git")
 os.chdir("/home/pi/requests")
 os.system("sudo python setup.py install")
 os.chdir("/home/pi/")
