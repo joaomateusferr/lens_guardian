@@ -2,25 +2,29 @@ import os
 import time
 import requests
 import sys
-from termios import tcflush, TCIFLUSH
 
 time.sleep(10)
 
-tcflush(sys.stdin, TCIFLUSH)
+os.chdir("/home/pi/")
+os.system("sudo apt-get install git")
 
-print("Fill in the  WIFI data!")
+os.system("git clone https://github.com/adafruit/Adafruit_Python_DHT.git")
+os.chdir("/home/pi/Adafruit_Python_DHT")
+os.system("sudo python setup.py install") 
+os.chdir("/home/pi/")
 
-ssid = raw_input('SSID: ')
-wifi_password = raw_input('Password: ')
+os.system("git clone git://github.com/kennethreitz/requests.git")
+os.chdir("/home/pi/requests")
+os.system("sudo python setup.py install")
+os.chdir("/home/pi/")
 
-#os.system("sudo echo 'ctrl_interface=DIR=/var/run/wpa_supplicant GROUP=netdev' | sudo tee /etc/wpa_supplicant/wpa_supplicant.conf")
-#os.system("sudo echo 'update_config=1' | sudo tee -a /etc/wpa_supplicant/wpa_supplicant.conf")
-#os.system("sudo echo 'country=BR' | sudo tee -a /etc/wpa_supplicant/wpa_supplicant.conf")
-os.system("sudo echo '' | sudo tee -a /etc/wpa_supplicant/wpa_supplicant.conf")
-os.system("sudo echo 'network = {' | sudo tee -a /etc/wpa_supplicant/wpa_supplicant.conf")
-os.system("sudo echo 'ssid = " + str(ssid) + "' | sudo tee -a /etc/wpa_supplicant/wpa_supplicant.conf")
-os.system("sudo echo 'psk = " + str(wifi_password) + "' | sudo tee -a /etc/wpa_supplicant/wpa_supplicant.conf")
-os.system("sudo echo '}' | sudo tee -a /etc/wpa_supplicant/wpa_supplicant.conf")
+os.system("git clone https://github.com/joaomateusferr/VinosIOT.git")
+
+os.system("sudo apt-get install python-rpi.gpio python3-rpi.gpio")
+
+os.system("clear")
+
+print("Downloads done!\n")
 
 url_login = 'http://ec2-18-228-191-79.sa-east-1.compute.amazonaws.com:8080/api/iot/singup'
 
@@ -43,8 +47,9 @@ ulr_file.write('http://ec2-18-228-191-79.sa-east-1.compute.amazonaws.com:8080/ap
 ulr_file.close()
 
 os.system("sudo echo '#!/bin/sh -e' | sudo tee /etc/rc.local")
-os.system("sudo echo '#Startup 2' | sudo tee -a /etc/rc.local")
+os.system("sudo echo '#Startup' | sudo tee -a /etc/rc.local")
 os.system("sudo echo 'sudo python /home/pi/VinosIOT/code.py &' | sudo tee -a /etc/rc.local")
 os.system("sudo echo 'exit 0' | sudo tee -a /etc/rc.local")
 
+os.system("sudo raspi-config nonint do_boot_behaviour B2")
 os.system("sudo reboot")
