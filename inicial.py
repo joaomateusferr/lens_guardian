@@ -1,12 +1,13 @@
 import os
 import time
+import requests
 
 time.sleep(30)
 
 print("Fill in the  WIFI data!")
 
-ssid = raw_input('SSID: ')
-wifi_password = raw_input('Password: ')
+ssid = input('SSID: ')
+wifi_password = input('Password: ')
 
 os.system("sudo echo 'ctrl_interface=DIR=/var/run/wpa_supplicant GROUP = netdev' | sudo tee /etc/wpa_supplicant/wpa_supplicant.conf")
 os.system("sudo echo 'update_config = 1' | sudo tee -a /etc/wpa_supplicant/wpa_supplicant.conf")
@@ -19,15 +20,15 @@ url_login = 'http://ec2-18-228-191-79.sa-east-1.compute.amazonaws.com:8080/api/i
 
 print("Fill in the Vinos data!")
 
-email = raw_input('Email: ')
-password = raw_input('Password: ')
+email = input('Email: ')
+password = input('Password: ')
 
 payload = "{\n\t\"email\": \""+ email +"\",\n\"senha\": \""+ password +"\"\n}"
 headers = {'Content-Type': "application/json",'cache-control': "no-cache"}
 
-response = requests.request("POST", url_login, data = payload, headers = headers)
+#response = requests.request("POST", url_login, data = payload, headers = headers)
 
-devices = response.text
+#devices = response.text
 
 #selecionar qual dispositivo sera usado para gerar a ulr
 

@@ -7,6 +7,8 @@ import Adafruit_DHT
 import RPi.GPIO as GPIO
 import requests
 
+GPIO.setwarnings(False)
+
 sensor_type = Adafruit_DHT.DHT22
 sensor_pin = 14
 btn_reset = 21
@@ -50,7 +52,7 @@ if (reset == False):
 else:
 
     ulr_file = open("ulr.txt", "r")
-    ulr = f.read()
+    ulr = ulr_file.readline()
     ulr_file.close()
 
     time.sleep(interval)
