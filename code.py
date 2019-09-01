@@ -48,9 +48,11 @@ if (reset == False):
 
 else:
 
-    ulr_file = open("ulr.txt", "r")
-    ulr = ulr_file.readline()
-    ulr_file.close()
+    os.chdir("/home/pi/")
+
+    url_file = open("ulr.txt", "r")
+    url = ulr_file.readline()
+    url_file.close()
 
     time.sleep(interval)
 
