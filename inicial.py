@@ -1,8 +1,12 @@
 import os
 import time
 import requests
+import sys
+from termios import tcflush, TCIFLUSH
 
-time.sleep(30)
+time.sleep(10)
+
+tcflush(sys.stdin, TCIFLUSH)
 
 print("Fill in the  WIFI data!")
 
