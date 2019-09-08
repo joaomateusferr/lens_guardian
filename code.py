@@ -19,8 +19,6 @@ interval = 60
 
 time.sleep(10)
 
-#http://razzpisampler.oreilly.com/ch07.html
-
 GPIO.setmode(GPIO.BCM)
 GPIO.setup(btn_reset, GPIO.IN, pull_up_down = GPIO.PUD_UP)
 reset  = GPIO.input(btn_reset)
@@ -48,9 +46,10 @@ if (reset == False):
 
 else:
 
-    ulr_file = open("ulr.txt", "r")
-    ulr = ulr_file.readline()
-    ulr_file.close()
+
+    url_file = open("url.txt", "r")
+    url = url_file.readline()
+    url_file.close()
 
     time.sleep(interval)
 
@@ -72,16 +71,21 @@ else:
             payload = "{\n\t\"umidade\": \""+ str(humidity) +"\",\n\"temperatura\": \""+ str(temperature) +"\"\n}"
             headers = {'Content-Type': "application/json",'cache-control': "no-cache"}
 
-            response = requests.request("POST", url, data = payload, headers = headers)        
+            try:
+                response = requests.request("POST", url, data = payload, headers = headers)
+
+                if (response.status_code == 200):
+                    print("Data Sent\n")
+                    GPIO.output(led_white, True)
+                else:
+                    print("Error While Sending Data\n")
+                    GPIO.output(led_white, False)
             
-            if (response.status_code == 200):
-                print("Data Sent\n")
-                GPIO.output(led_white, True)
-            else:
-                print("Error While Sending Data\n")
-                GPIO.output(led_white, False)
-            
-            time.sleep(interval)
+                time.sleep(interval)
+
+            except:
+                print("Response Error\n")
+
         else:
             print('Failed to get reading')
             GPIO.output(led_white, False)
