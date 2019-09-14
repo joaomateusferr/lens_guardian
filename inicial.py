@@ -31,12 +31,12 @@ os.system("sudo python setup.py install")
 
 os.chdir("/home/pi/")
 
-vinos_lib = os.path.exists("./VinosIOT")
+vinos_lib = os.path.exists("./VinusIOT")
 
 if(vinos_lib):
-    shutil.rmtree("VinosIOT")
+    shutil.rmtree("VinusIOT")
 
-os.system("git clone https://github.com/joaomateusferr/VinosIOT.git")
+os.system("git clone https://github.com/joaomateusferr/VinusIOT.git")
 
 os.system("sudo apt-get install python-rpi.gpio python3-rpi.gpio")
 
@@ -56,13 +56,21 @@ headers = {'Content-Type': "application/json",'cache-control': "no-cache"}
 
 response = requests.request("POST", url_login, data = payload, headers = headers)
 
+token = '**************'
+
+os.chdir("/home/pi/VinusIOT/")
+token_file = open("token.txt", "w+")
+token_file.write(token)
+token_file.close()
+
 #devices = response.text
 
 #selecionar qual dispositivo sera usado para gerar a ulr
 
-os.chdir("/home/pi/VinosIOT/")
+url_device = 'aaaaaaaaaaa'
+
 url_file = open("url.txt", "w+")
-url_file.write('http://ec2-18-228-191-79.sa-east-1.compute.amazonaws.com:8080/api/medicao')
+url_file.write(url_device)
 url_file.close()
 
 os.system("sudo echo '#!/bin/sh -e' | sudo tee /etc/rc.local")
