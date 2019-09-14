@@ -51,6 +51,10 @@ else:
     url = url_file.readline()
     url_file.close()
 
+    token_file = open("token.txt", "r")
+    token = token_file.readline()
+    token_file.close()
+
     time.sleep(interval)
 
     while(1):
@@ -69,7 +73,7 @@ else:
             print('Temp={0:0.1f}  Humidity={1:0.1f}%'.format(temperature, humidity))
             
             payload = "{\n\t\"umidade\": \""+ str(humidity) +"\",\n\"temperatura\": \""+ str(temperature) +"\"\n}"
-            headers = {'Content-Type': "application/json",'cache-control': "no-cache"}
+            headers = {'Content-Type': "application/json",'cache-control': "no-cache", 'Token': str(token)}
 
             try:
                 response = requests.request("POST", url, data = payload, headers = headers)
