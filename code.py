@@ -46,6 +46,15 @@ if (reset == False):
 
 else:
 
+    server = 'google.com'
+
+    rep = os.system('ping -i 1 -c 3  ' + server)
+
+    if rep == 0:
+        print ('Connected to the internet!')
+    else:
+        print ('No internet connection!')
+        sys.exit()
 
     url_file = open("url.txt", "r")
     url = url_file.readline()
@@ -75,7 +84,14 @@ else:
             payload = "{\n\t\"umidade\": \""+ str(humidity) +"\",\n\"temperatura\": \""+ str(temperature) +"\"\n}"
             headers = {'Content-Type': "application/json",'cache-control': "no-cache", 'Token': str(token)}
 
-            try:
+            api = 'http://ec2-18-228-191-79.sa-east-1.compute.amazonaws.com:8080/api/on'
+
+            rep = os.system('ping -i 1 -c 3  ' + api)
+
+            if rep == 0:
+                print ('API online!')
+
+                try:
                 response = requests.request("POST", url, data = payload, headers = headers)
 
                 if (response.status_code == 200):
@@ -90,7 +106,11 @@ else:
             except:
                 print("Response Error\n")
 
+
         else:
-            print('Failed to get reading')
-            GPIO.output(led_white, False)
-            time.sleep(interval)
+            print ('API offline!\nTry agan later!')
+            
+    else:
+        print('Failed to get reading')
+        GPIO.output(led_white, False)
+        time.sleep(interval)
