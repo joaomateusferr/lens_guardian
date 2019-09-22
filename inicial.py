@@ -6,6 +6,16 @@ import sys
 
 time.sleep(10)
 
+server = 'google.com'
+
+rep = os.system('ping -i 1 -c 3  ' + server)
+
+if rep == 0:
+    print ('Connected to the internet!')
+else:
+    print ('No internet connection!')
+    sys.exit()
+
 os.chdir("/home/pi/")
 os.system("sudo apt-get install git")
 
@@ -44,17 +54,31 @@ os.system("clear")
 
 print("All downloads and updates done!\n")     
 
-url_login = 'http://ec2-18-228-191-79.sa-east-1.compute.amazonaws.com:8080/api/iot/singup'
+url_login = 'http://ec2-18-228-191-79.sa-east-1.compute.amazonaws.com:8080/api/login'
 
 print("Fill in the Vinos data!")
 
 email = raw_input('Email: ')
 password = raw_input('Password: ')
 
-payload = "{\n\t\"email\": \""+ email +"\",\n\"senha\": \""+ password +"\"\n}"
+payload = "{\n\t\"email\": \""+ email +"\",\n\"password\": \""+ password +"\"\n}"
 headers = {'Content-Type': "application/json",'cache-control': "no-cache"}
 
-response = requests.request("POST", url_login, data = payload, headers = headers)
+api = 'http://ec2-18-228-191-79.sa-east-1.compute.amazonaws.com:8080/api/on'
+
+rep = os.system('ping -i 1 -c 3  ' + api)
+
+if rep == 0:
+    print ('API online!')
+else:
+    print ('API offline!\nTry agan later!')
+    sys.exit()
+
+try:
+    response = requests.request("POST", url_login, data = payload, headers = headers)
+
+except:
+    print("Login Response Error\n")
 
 token = '**************'
 
