@@ -54,14 +54,12 @@ os.system("clear")
 
 print("All downloads and updates done!\n")     
 
-url_login = 'http://ec2-18-228-191-79.sa-east-1.compute.amazonaws.com:8080/api/login'
-
 print("Fill in the Vinos data!")
 
 email = raw_input('Email: ')
 password = raw_input('Password: ')
 
-payload = "{\n\t\"email\": \""+ email +"\",\n\"password\": \""+ password +"\"\n}"
+payload = "{\n\t\"email\": \""+ email +"\",\n\t\"password\": \""+ password +"\"\n}"
 headers = {'Content-Type': "application/json",'cache-control': "no-cache"}
 
 api = 'http://ec2-18-228-191-79.sa-east-1.compute.amazonaws.com'
@@ -74,13 +72,23 @@ else:
     print ('API offline!\nTry agan later!')
     sys.exit()
 
+url_token = 'http://ec2-18-228-191-79.sa-east-1.compute.amazonaws.com:8080/api/token'
+
+try:
+    response = requests.request("POST", url_token, data = payload, headers = headers)
+
+except:
+    print("Token Response Error\n")
+
+url_login = 'http://ec2-18-228-191-79.sa-east-1.compute.amazonaws.com:8080/api/login'
+
 try:
     response = requests.request("POST", url_login, data = payload, headers = headers)
 
 except:
     print("Login Response Error\n")
 
-token = '**************'
+token = response.text
 
 os.chdir("/home/pi/VinusIOT/")
 token_file = open("token.txt", "w+")
