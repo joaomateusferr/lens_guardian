@@ -8,7 +8,7 @@ time.sleep(10)
 
 internet = 'google.com'
 
-rep = os.system('ping -i 1 -c 3  ' + internet)
+rep = os.system('ping -i 1 -c 3 ' + internet)
 
 if rep == 0:
     print ('Connected to the internet!')
@@ -64,7 +64,7 @@ headers = {'Content-Type': "application/json",'cache-control': "no-cache"}
 
 api = 'http://ec2-18-228-191-79.sa-east-1.compute.amazonaws.com'
 
-rep = os.system('ping -i 1 -c 3  ' + api)
+rep = os.system('ping -i 1 -c 3 ' + api)
 
 if rep == 0:
     print ('API online!')
@@ -72,13 +72,6 @@ else:
     print ('API offline!\nTry agan later!')
     sys.exit()
 
-url_token = 'http://ec2-18-228-191-79.sa-east-1.compute.amazonaws.com:8080/api/token'
-
-try:
-    response = requests.request("POST", url_token, data = payload, headers = headers)
-
-except:
-    print("Token Response Error\n")
 
 url_login = 'http://ec2-18-228-191-79.sa-east-1.compute.amazonaws.com:8080/api/login'
 

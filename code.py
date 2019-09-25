@@ -48,7 +48,7 @@ else:
 
     internet = 'google.com'
 
-    rep = os.system('ping -i 1 -c 3  ' + internet)
+    rep = os.system('ping -i 1 -c 3 ' + internet)
 
     if rep == 0:
         print ('Connected to the internet!')
@@ -86,7 +86,7 @@ else:
 
             api = 'http://ec2-18-228-191-79.sa-east-1.compute.amazonaws.com'
 
-            rep = os.system('ping -i 1 -c 3  ' + api)
+            rep = os.system('ping -i 1 -c 3 ' + api)
 
             if rep == 0:
                 print ('API online!')

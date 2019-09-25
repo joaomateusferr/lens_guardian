@@ -1,7 +1,7 @@
 import os
 import shutil
 import time
-import requests
+#import requests
 import sys
 
 server = 'google.com'
@@ -22,8 +22,8 @@ url_login = 'http://ec2-18-228-191-79.sa-east-1.compute.amazonaws.com:8080/api/l
 
 print("Fill in the Vinos data!")
 
-email = input('Email: ')
-password = input('Password: ')
+email = raw_input('Email: ')
+password = raw_input('Password: ')
 
 payload = "{\n\t\"email\": \""+ email +"\",\n\"senha\": \""+ password +"\"\n}"
 headers = {'Content-Type': "application/json",'cache-control': "no-cache"}
