@@ -100,7 +100,7 @@ url_file.close()
 
 os.system("sudo echo '#!/bin/sh -e' | sudo tee /etc/rc.local")
 os.system("sudo echo '#Startup' | sudo tee -a /etc/rc.local")
-os.system("sudo echo 'sudo python /home/pi/VinosIOT/code.py &' | sudo tee -a /etc/rc.local")
+os.system("sudo echo 'sudo python /home/pi/VinusIOT/code.py &' | sudo tee -a /etc/rc.local")
 os.system("sudo echo 'exit 0' | sudo tee -a /etc/rc.local")
 
 os.system("sudo raspi-config nonint do_boot_behaviour B2")
