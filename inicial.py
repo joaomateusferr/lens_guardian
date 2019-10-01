@@ -6,9 +6,9 @@ import sys
 
 time.sleep(10)
 
-server = 'google.com'
+internet = 'google.com'
 
-rep = os.system('ping -i 1 -c 3  ' + server)
+rep = os.system('ping -i 1 -c 3 ' + internet)
 
 if rep == 0:
     print ('Connected to the internet!')
@@ -54,19 +54,17 @@ os.system("clear")
 
 print("All downloads and updates done!\n")     
 
-url_login = 'http://ec2-18-228-191-79.sa-east-1.compute.amazonaws.com:8080/api/login'
-
 print("Fill in the Vinos data!")
 
 email = raw_input('Email: ')
 password = raw_input('Password: ')
 
-payload = "{\n\t\"email\": \""+ email +"\",\n\"password\": \""+ password +"\"\n}"
+payload = "{\n\t\"email\": \""+ email +"\",\n\t\"password\": \""+ password +"\"\n}"
 headers = {'Content-Type': "application/json",'cache-control': "no-cache"}
 
-api = 'http://ec2-18-228-191-79.sa-east-1.compute.amazonaws.com:8080/api/on'
+api = 'http://ec2-18-228-191-79.sa-east-1.compute.amazonaws.com'
 
-rep = os.system('ping -i 1 -c 3  ' + api)
+rep = os.system('ping -i 1 -c 3 ' + api)
 
 if rep == 0:
     print ('API online!')
@@ -74,13 +72,16 @@ else:
     print ('API offline!\nTry agan later!')
     sys.exit()
 
+
+url_login = 'http://ec2-18-228-191-79.sa-east-1.compute.amazonaws.com:8080/api/login'
+
 try:
     response = requests.request("POST", url_login, data = payload, headers = headers)
 
 except:
     print("Login Response Error\n")
 
-token = '**************'
+token = response.text
 
 os.chdir("/home/pi/VinusIOT/")
 token_file = open("token.txt", "w+")
@@ -99,7 +100,7 @@ url_file.close()
 
 os.system("sudo echo '#!/bin/sh -e' | sudo tee /etc/rc.local")
 os.system("sudo echo '#Startup' | sudo tee -a /etc/rc.local")
-os.system("sudo echo 'sudo python /home/pi/VinosIOT/code.py &' | sudo tee -a /etc/rc.local")
+os.system("sudo echo 'sudo python /home/pi/VinusIOT/code.py &' | sudo tee -a /etc/rc.local")
 os.system("sudo echo 'exit 0' | sudo tee -a /etc/rc.local")
 
 os.system("sudo raspi-config nonint do_boot_behaviour B2")
