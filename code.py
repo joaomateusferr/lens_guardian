@@ -31,11 +31,13 @@ GPIO.output(led_white, False)
 GPIO.output(led_red, False)
 GPIO.output(led_green, False)
 
+time.sleep(10)
+
 if (reset == False):
 
-    GPIO.output(led_white, True)
     GPIO.output(led_red, True)
     GPIO.output(led_green, True)
+    
 
     print("Reset ...\n")
 
@@ -56,9 +58,9 @@ else:
         print ('No internet connection!')
         sys.exit()
 
-    url_file = open("url.txt", "r")
-    url = url_file.readline()
-    url_file.close()
+    device_file = open("device.txt", "r")
+    device = device_file.readline()
+    device_file.close()
 
     token_file = open("token.txt", "r")
     token = token_file.readline()
@@ -92,25 +94,27 @@ else:
                 print ('API online!')
 
                 try:
-                response = requests.request("POST", url, data = payload, headers = headers)
+                    response = requests.request("POST", url, data = payload, headers = headers)
 
-                if (response.status_code == 200):
-                    print("Data Sent\n")
-                    GPIO.output(led_white, True)
-                else:
-                    print("Error While Sending Data\n")
-                    GPIO.output(led_white, False)
-            
-                time.sleep(interval)
+                    if (response.status_code == 200):
+                        print("Data Sent\n")
+                    else:
+                        print("Error While Sending Data\n")
+                        GPIO.output(led_red, False)
+                        GPIO.output(led_green, False)
+                        GPIO.output(led_white, True)
+                        time.sleep(interval)
 
-            except:
-                print("Response Error\n")
+                except:
+                    print("Response Error\n")
 
 
+            else:
+                print ('API offline!\nTry agan later!')
+                
         else:
-            print ('API offline!\nTry agan later!')
-            
-    else:
-        print('Failed to get reading')
-        GPIO.output(led_white, False)
-        time.sleep(interval)
+            print('Failed to get reading')
+            GPIO.output(led_red, False)
+            GPIO.output(led_green, False)
+            GPIO.output(led_white, True)
+            time.sleep(interval)
