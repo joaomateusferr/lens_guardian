@@ -17,6 +17,10 @@ led_red = 20
 led_green = 26
 interval = 60
 
+internet = 'google.com'
+api = 'http://ec2-18-228-191-79.sa-east-1.compute.amazonaws.com'
+url_measurements = '2-18-228-191-79.sa-east-1.compute.amazonaws.com:8080/api/medicoes/'
+
 time.sleep(10)
 
 GPIO.setmode(GPIO.BCM)
@@ -47,8 +51,6 @@ if (reset == False):
     #os.system("sudo reboot")
 
 else:
-
-    internet = 'google.com'
 
     rep = os.system('ping -i 1 -c 3 ' + internet)
 
@@ -83,10 +85,10 @@ else:
 
             print('Temp={0:0.1f}  Humidity={1:0.1f}%'.format(temperature, humidity))
             
-            payload = "{\n\t\"umidade\": \""+ str(humidity) +"\",\n\"temperatura\": \""+ str(temperature) +"\"\n}"
-            headers = {'Content-Type': "application/json",'cache-control': "no-cache", 'Token': str(token)}
+            #add the device id in the payload
 
-            api = 'http://ec2-18-228-191-79.sa-east-1.compute.amazonaws.com'
+            payload = "{\n\t\"umidade\": \""+ str(humidity) +"\",\n\"temperatura\": \""+ str(temperature) +"\"\n}"
+            headers = {'Content-Type': "application/json",'cache-control': "no-cache", 'Authorization': token}
 
             rep = os.system('ping -i 1 -c 3 ' + api)
 
@@ -94,7 +96,7 @@ else:
                 print ('API online!')
 
                 try:
-                    response = requests.request("POST", url, data = payload, headers = headers)
+                    response = requests.request("POST", url_measurements, data = payload, headers = headers)
 
                     if (response.status_code == 200):
                         print("Data Sent\n")

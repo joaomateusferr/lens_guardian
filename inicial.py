@@ -8,8 +8,9 @@ import sys
 #time.sleep(10)
 
 #internet = 'google.com'
+#api = 'http://ec2-18-228-191-79.sa-east-1.compute.amazonaws.com'
 url_login = 'http://ec2-18-228-191-79.sa-east-1.compute.amazonaws.com:8080/api/login'
-ulr_user_data = 'http://ec2-18-228-191-79.sa-east-1.compute.amazonaws.com:8080/api/userinfo'
+ulr_devices = 'http://ec2-18-228-191-79.sa-east-1.compute.amazonaws.com:8080/api/devices'
 
 #rep = os.system('ping -i 1 -c 3 ' + internet)
 
@@ -64,9 +65,6 @@ print("Fill in the Vinos data!")
 email = 'carlitos@vinos.com'
 password = '123'
 
-
-#api = 'http://ec2-18-228-191-79.sa-east-1.compute.amazonaws.com'
-
 #rep = os.system('ping -i 1 -c 3 ' + api)
 
 #if rep == 0:
@@ -75,48 +73,60 @@ password = '123'
     #$print ('API offline!\nTry agan later!')
     #sys.exit()
 
-#try:
-payload = "{\n\t\"email\": \""+ email +"\",\n\t\"password\": \""+ password +"\"\n}"
-headers = {'Content-Type': "application/json",'cache-control': "no-cache"}
+try:
+    payload = "{\n\t\"email\": \""+ email +"\",\n\t\"password\": \""+ password +"\"\n}"
+    headers = {'Content-Type': "application/json",'cache-control': "no-cache"}
     
-response = requests.request("POST", url_login, data = payload, headers = headers)
+    response = requests.request("POST", url_login, data = payload, headers = headers)
     
-token = response.headers['Authorization']
-os.chdir("/home/pi/VinusIOT/")
-token_file = open("token.txt", "w+")
-token_file.write(token)
-token_file.close()
+    token = response.headers['Authorization']
+    os.chdir("/home/pi/VinusIOT/")
+    token_file = open("token.txt", "w+")
+    token_file.write(token)
+    token_file.close()
     
-#except:
-    #print("Login Error\n")
-    #sys.exit()
-    
-    
+except:
+    print("Login Error\n")
+    sys.exit()
+     
 try:
     headers = {'Content-Type': "application/json",'cache-control': "no-cache", 'Authorization': token, 'email': email}
-    response = requests.request("GET", ulr_user_data, data = payload, headers = headers)
+    response = requests.request("GET", ulr_devices, data = payload, headers = headers)
     jsonToPython = json.loads(response.text)
-    id_user = jsonToPython['listData'][0]
+    #id_user = jsonToPython['listData'][0] //change it to get the devices names and ids
+
+    #devices_names = ["Adega 1", "Adega 2", "Adega 3"]
+    #devices_ids = [10, 12, 15]
 
 except:
-    print("Get User Data Error\n")
-    sys.exit()
-    
-
-try:
-    headers = {'Content-Type': "application/json",'cache-control': "no-cache", 'Authorization': token, 'id': email}
-    response = requests.request("GET", ulr_user_data, data = payload, headers = headers)
-    jsonToPython = json.loads(response.text)
-    id_user = jsonToPython['listData'][0]
-
-except:
-    print("Get User Data Error\n")
+    print("Get Devices Error\n")
     sys.exit()
 
+os.system("clear")
+
+isvalid = True
+
+while(isvalid):
+
+    for i, name in enumerate(devices_names):
+            print(str(i+1) + ' - ' + name + ' - [ID -> ' + str(devices_ids[i]) + ']')
+
+    try:
+        device_number = int(raw_input('Select the device: ')) 
+        isvalid = False
+    except:
+        os.system("clear")
+        print('Enter an integer')
+        isvalid = True
+        continue
     
+    if (device_number <= 0 or device_number > i+1):
+        os.system("clear")
+        print('Enter an valid number between 1 and ' + str(i+1))
+        isvalid = True
 
 device_file = open("device.txt", "w+")
-device_file.write(device)
+device_file.write(devices_ids[device_number-1])
 device_file.close()
 
 os.system("sudo echo '#!/bin/sh -e' | sudo tee /etc/rc.local")
