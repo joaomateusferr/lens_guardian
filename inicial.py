@@ -8,6 +8,8 @@ import sys
 #time.sleep(10)
 
 #internet = 'google.com'
+url_login = 'http://ec2-18-228-191-79.sa-east-1.compute.amazonaws.com:8080/api/login'
+ulr_user_data = 'http://ec2-18-228-191-79.sa-east-1.compute.amazonaws.com:8080/api/userinfo'
 
 #rep = os.system('ping -i 1 -c 3 ' + internet)
 
@@ -57,11 +59,11 @@ print("All downloads and updates done!\n")
 
 print("Fill in the Vinos data!")
 
-email = raw_input('Email: ')
-password = raw_input('Password: ')
+#email = raw_input('Email: ')
+#password = raw_input('Password: ')
+email = 'carlitos@vinos.com'
+password = '123'
 
-payload = "{\n\t\"email\": \""+ email +"\",\n\t\"password\": \""+ password +"\"\n}"
-headers = {'Content-Type': "application/json",'cache-control': "no-cache"}
 
 #api = 'http://ec2-18-228-191-79.sa-east-1.compute.amazonaws.com'
 
@@ -73,29 +75,45 @@ headers = {'Content-Type': "application/json",'cache-control': "no-cache"}
     #$print ('API offline!\nTry agan later!')
     #sys.exit()
 
+#try:
+payload = "{\n\t\"email\": \""+ email +"\",\n\t\"password\": \""+ password +"\"\n}"
+headers = {'Content-Type': "application/json",'cache-control': "no-cache"}
+    
+response = requests.request("POST", url_login, data = payload, headers = headers)
+    
+token = response.headers['Authorization']
+os.chdir("/home/pi/VinusIOT/")
+token_file = open("token.txt", "w+")
+token_file.write(token)
+token_file.close()
+    
+#except:
+    #print("Login Error\n")
+    #sys.exit()
+    
+    
+try:
+    headers = {'Content-Type': "application/json",'cache-control': "no-cache", 'Authorization': token, 'email': email}
+    response = requests.request("GET", ulr_user_data, data = payload, headers = headers)
+    jsonToPython = json.loads(response.text)
+    id_user = jsonToPython['listData'][0]
 
-url_login = 'http://ec2-18-228-191-79.sa-east-1.compute.amazonaws.com:8080/api/login'
+except:
+    print("Get User Data Error\n")
+    sys.exit()
+    
 
 try:
-    response = requests.request("POST", url_login, data = payload, headers = headers)
-    token = response.headers['Authorization']
-    os.chdir("/home/pi/VinusIOT/")
-    token_file = open("token.txt", "w+")
-    token_file.write(token)
-    token_file.close()
-    
+    headers = {'Content-Type': "application/json",'cache-control': "no-cache", 'Authorization': token, 'id': email}
+    response = requests.request("GET", ulr_user_data, data = payload, headers = headers)
+    jsonToPython = json.loads(response.text)
+    id_user = jsonToPython['listData'][0]
+
 except:
-    print("Login Error\n")
+    print("Get User Data Error\n")
+    sys.exit()
+
     
-
-#pegar  dados do usuario -> como fazer ?
-
-#selecionar qual dispositivo sera usado para gerar o arquivo -> a fazer na api
-
-#headers = {'Content-Type': "application/json",'cache-control': "no-cache", 'Authorization': token}
-
-
-device = 'aaaaaaaaaaa'
 
 device_file = open("device.txt", "w+")
 device_file.write(device)
