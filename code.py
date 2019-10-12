@@ -34,17 +34,17 @@ GPIO.output(led_green, False)
 time.sleep(10)
 
 if (reset == False):
-
     GPIO.output(led_red, True)
-    GPIO.output(led_green, True)
+    GPIO.output(led_white, True)
     
+    print(led_white)
 
     print("Reset ...\n")
 
     time.sleep(10)
     
-    os.system("sudo raspi-config nonint do_boot_behaviour B4")
-    os.system("sudo reboot")
+    #os.system("sudo raspi-config nonint do_boot_behaviour B4")
+    #os.system("sudo reboot")
 
 else:
 
@@ -98,11 +98,10 @@ else:
 
                     if (response.status_code == 200):
                         print("Data Sent\n")
+                        GPIO.output(led_white, True)
                     else:
                         print("Error While Sending Data\n")
-                        GPIO.output(led_red, False)
-                        GPIO.output(led_green, False)
-                        GPIO.output(led_white, True)
+                        GPIO.output(led_white, False)
                         time.sleep(interval)
 
                 except:
@@ -114,7 +113,5 @@ else:
                 
         else:
             print('Failed to get reading')
-            GPIO.output(led_red, False)
-            GPIO.output(led_green, False)
-            GPIO.output(led_white, True)
+            GPIO.output(led_white, False)
             time.sleep(interval)
