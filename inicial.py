@@ -93,6 +93,9 @@ try:
     headers = {'Content-Type': "application/json",'cache-control': "no-cache", 'Authorization': token, 'email': email}
     response = requests.request("GET", ulr_devices, data = payload, headers = headers)
     jsonToPython = json.loads(response.text)
+
+    #manipular conteudo que volta da api
+
     #id_user = jsonToPython['listData'][0] //change it to get the devices names and ids
 
     #devices_names = ["Adega 1", "Adega 2", "Adega 3"]
