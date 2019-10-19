@@ -116,7 +116,7 @@ while(isvalid):
         print(str(i+1) + ' - ' + str(n[1]) + ' - [ID -> ' + str(n[0]) + ']')
 
     try:
-        device_number = int(input('Select the device: ')) 
+        device_number = int(raw_input('Select the device: ')) 
         isvalid = False
     except:
         os.system("clear")
