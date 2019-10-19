@@ -19,7 +19,7 @@ interval = 60
 
 internet = 'google.com'
 api = 'http://ec2-18-228-191-79.sa-east-1.compute.amazonaws.com'
-url_measurements = '2-18-228-191-79.sa-east-1.compute.amazonaws.com:8080/api/medicoes/'
+url_measurements = '2-18-228-191-79.sa-east-1.compute.amazonaws.com:8080/api/iot/medicoes'
 
 time.sleep(10)
 
