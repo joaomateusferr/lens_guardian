@@ -84,10 +84,8 @@ else:
                 GPIO.output(led_green, True)
 
             print('Temp={0:0.1f}  Humidity={1:0.1f}%'.format(temperature, humidity))
-            
-            #add the device id in the payload
 
-            payload = "{\n\t\"umidade\": \""+ str(humidity) +"\",\n\"temperatura\": \""+ str(temperature) +"\"\n}"
+            payload = "{\"device\": {\"id\": \""+ str(device) +"\"}, \"humidity\": \""+ str(humidity) +"\",\"temperature\": \""+ str(temperature) +"\"}"
             headers = {'Content-Type': "application/json",'cache-control': "no-cache", 'Authorization': token}
 
             rep = os.system('ping -i 1 -c 3 ' + api)
