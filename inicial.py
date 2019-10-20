@@ -24,32 +24,17 @@ else:
 os.chdir("/home/pi/")
 os.system("sudo apt-get install git")
 
-dht_lib = os.path.exists("./Adafruit_Python_DHT")
-
-if(dht_lib):
-    shutil.rmtree("Adafruit_Python_DHT")
-
 os.system("git clone https://github.com/adafruit/Adafruit_Python_DHT.git")
 os.chdir("/home/pi/Adafruit_Python_DHT")
 os.system("sudo python setup.py install")
 
 os.chdir("/home/pi/")
 
-requests_lib = os.path.exists("./requests")
-
-if(requests_lib):
-    shutil.rmtree("requests")
-
 os.system("git clone git://github.com/kennethreitz/requests.git")
 os.chdir("/home/pi/requests")
 os.system("sudo python setup.py install")
 
 os.chdir("/home/pi/")
-
-vinos_lib = os.path.exists("./VinusIOT")
-
-if(vinos_lib):
-    shutil.rmtree("VinusIOT")
 
 os.system("git clone https://github.com/joaomateusferr/VinusIOT.git")
 
@@ -63,14 +48,6 @@ print("Fill in the Vinos data!")
 
 email = raw_input('Email: ')
 password = raw_input('Password: ')
-
-rep = os.system('ping -i 1 -c 3 ' + api)
-
-if rep == 0:
-    print ('API online!')
-else:
-    print ('API offline!\nTry agan later!')
-    sys.exit()
 
 try:
     payload_login = "{\n\t\"email\": \""+ email +"\",\n\t\"password\": \""+ password +"\"\n}"
