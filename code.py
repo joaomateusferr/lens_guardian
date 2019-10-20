@@ -13,13 +13,11 @@ sensor_type = Adafruit_DHT.DHT22
 sensor_pin = 14
 btn_reset = 21
 led_white = 16
-led_red = 20
 led_green = 26
-interval = 60
+interval = 5
 
 internet = 'google.com'
-api = 'http://ec2-18-228-191-79.sa-east-1.compute.amazonaws.com'
-url_measurements = '2-18-228-191-79.sa-east-1.compute.amazonaws.com:8080/api/iot/medicoes'
+url_measurements = 'http://ec2-18-228-191-79.sa-east-1.compute.amazonaws.com:8080/api/iot/medicoes'
 
 time.sleep(10)
 
@@ -28,20 +26,16 @@ GPIO.setup(btn_reset, GPIO.IN, pull_up_down = GPIO.PUD_UP)
 reset  = GPIO.input(btn_reset)
 
 GPIO.setup(led_white, GPIO.OUT)
-GPIO.setup(led_red, GPIO.OUT)
 GPIO.setup(led_green, GPIO.OUT)
 
 GPIO.output(led_white, False)
-GPIO.output(led_red, False)
 GPIO.output(led_green, False)
 
 time.sleep(10)
 
 if (reset == False):
-    GPIO.output(led_red, True)
+    GPIO.output(led_green, True)
     GPIO.output(led_white, True)
-    
-    print(led_white)
 
     print("Reset ...\n")
 
@@ -68,7 +62,7 @@ else:
     token = token_file.readline()
     token_file.close()
 
-    time.sleep(interval)
+    time.sleep(10)
 
     while(1):
         
@@ -77,10 +71,8 @@ else:
         if humidity is not None and temperature is not None:
 
             if (humidity > 60):
-                GPIO.output(led_red, True)
                 GPIO.output(led_green, False)
             else:
-                GPIO.output(led_red, False)
                 GPIO.output(led_green, True)
 
             print('Temp={0:0.1f}  Humidity={1:0.1f}%'.format(temperature, humidity))
@@ -88,30 +80,21 @@ else:
             payload = "{\"device\": {\"id\": \""+ str(device) +"\"}, \"humidity\": \""+ str(humidity) +"\",\"temperature\": \""+ str(temperature) +"\"}"
             headers = {'Content-Type': "application/json",'cache-control': "no-cache", 'Authorization': token}
 
-            rep = os.system('ping -i 1 -c 3 ' + api)
+            try:
+                response = requests.request("POST", url_measurements, data = payload, headers = headers)
 
-            if rep == 0:
-                print ('API online!')
-
-                try:
-                    response = requests.request("POST", url_measurements, data = payload, headers = headers)
-
-                    if (response.status_code == 200):
-                        print("Data Sent\n")
-                        GPIO.output(led_white, True)
-                    else:
-                        print("Error While Sending Data\n")
-                        GPIO.output(led_white, False)
-                        time.sleep(interval)
-
-                except:
-                    print("Response Error\n")
-
-
-            else:
-                print ('API offline!\nTry agan later!')
+                if (response.status_code == 200):
+                    print("Data Sent\n")
+                    GPIO.output(led_white, True)
+                else:
+                    print("Error While Sending Data\n")
+                    GPIO.output(led_white, False)
+                    
+            except:
+                print("Error While Sending Data\n")
                 
         else:
             print('Failed to get reading')
             GPIO.output(led_white, False)
-            time.sleep(interval)
+        
+        time.sleep(interval)
