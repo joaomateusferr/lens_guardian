@@ -49,6 +49,10 @@ print("Fill in the Vinos data!")
 email = raw_input('Email: ')
 password = raw_input('Password: ')
 
+os.system("clear")
+
+print("we are bringing your data, wait just a little longer ...")
+
 try:
     payload_login = "{\n\t\"email\": \""+ email +"\",\n\t\"password\": \""+ password +"\"\n}"
     headers = {'Content-Type': "application/json",'cache-control': "no-cache"}
@@ -82,8 +86,6 @@ try:
 except:
     print("Get Devices Error\n")
     sys.exit()
-
-os.system("clear")
 
 isvalid = True
 
