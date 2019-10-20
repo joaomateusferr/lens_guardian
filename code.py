@@ -14,7 +14,7 @@ sensor_pin = 14
 btn_reset = 26
 led_white = 12
 led_green = 16
-interval = 60 #seconds
+interval = 600 #seconds
 
 internet = 'google.com'
 url_measurements = 'http://ec2-18-228-191-79.sa-east-1.compute.amazonaws.com:8080/api/iot/medicoes'
