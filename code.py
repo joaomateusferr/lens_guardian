@@ -11,10 +11,10 @@ GPIO.setwarnings(False)
 
 sensor_type = Adafruit_DHT.DHT22
 sensor_pin = 14
-btn_reset = 21
-led_white = 16
-led_green = 26
-interval = 5
+btn_reset = 26
+led_white = 12
+led_green = 16
+interval = 60 #seconds
 
 internet = 'google.com'
 url_measurements = 'http://ec2-18-228-191-79.sa-east-1.compute.amazonaws.com:8080/api/iot/medicoes'
@@ -41,8 +41,8 @@ if (reset == False):
 
     time.sleep(10)
     
-    #os.system("sudo raspi-config nonint do_boot_behaviour B4")
-    #os.system("sudo reboot")
+    os.system("sudo raspi-config nonint do_boot_behaviour B4")
+    os.system("sudo reboot")
 
 else:
 
