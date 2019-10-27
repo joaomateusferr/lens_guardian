@@ -44,7 +44,7 @@ os.system("sudo python setup.py install")
 
 os.chdir("/home/pi/")
 
-requests = os.path.isdir("/home/pi/VinusIOT")
+VinusIOT = os.path.isdir("/home/pi/VinusIOT")
 if(VinusIOT):
     os.system("sudo rm -r VinusIOT")
 
