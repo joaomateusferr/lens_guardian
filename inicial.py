@@ -105,7 +105,7 @@ try:
         sys.exit(0)
     
 except:
-    print("Get Devices Error\n")
+    print("Get Devices Error add a device in the Vinus web\n")
     sys.exit(0)
 
 isvalid = True
