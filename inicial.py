@@ -24,9 +24,9 @@ else:
 os.chdir("/home/pi/")
 os.system("sudo apt-get install git")
 
-Adafruit_Python_DHT = os.path.isdir("/home/pi/Adafruit_Python_DHT")
-if(Adafruit_Python_DHT):
-    os.system("sudo rm -r Adafruit_Python_DHT")
+#Adafruit_Python_DHT = os.path.isdir("/home/pi/Adafruit_Python_DHT")
+#if(Adafruit_Python_DHT):
+    #os.system("sudo rm -r Adafruit_Python_DHT")
 
 os.system("git clone https://github.com/adafruit/Adafruit_Python_DHT.git")
 os.chdir("/home/pi/Adafruit_Python_DHT")
@@ -34,9 +34,9 @@ os.system("sudo python setup.py install")
 
 os.chdir("/home/pi/")
 
-requests = os.path.isdir("/home/pi/requests")
-if(requests):
-    os.system("sudo rm -r requests")
+#requests = os.path.isdir("/home/pi/requests")
+#if(requests):
+    #os.system("sudo rm -r requests")
 
 os.system("git clone git://github.com/kennethreitz/requests.git")
 os.chdir("/home/pi/requests")
@@ -44,9 +44,9 @@ os.system("sudo python setup.py install")
 
 os.chdir("/home/pi/")
 
-VinusIOT = os.path.isdir("/home/pi/VinusIOT")
-if(VinusIOT):
-    os.system("sudo rm -r VinusIOT")
+#VinusIOT = os.path.isdir("/home/pi/VinusIOT")
+#if(VinusIOT):
+    #os.system("sudo rm -r VinusIOT")
 
 os.system("git clone https://github.com/joaomateusferr/VinusIOT.git")
 
