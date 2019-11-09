@@ -131,7 +131,7 @@ while(isvalid):
 
 device = str(jsonToPython['listData'][device_number-1][0])
 
-condition = 'humidity > 60'
+condition = 'humidity > 60 or temperature < 13 or temperature > 18'
 
 code_file = open("code.py", "w")
 code_file.write('#!/usr/bin/python\n\n')
@@ -152,7 +152,7 @@ code_file.write('sensor_pin = 14\n')
 code_file.write('btn_reset = 26\n')
 code_file.write('led_white = 12\n')
 code_file.write('led_green = 16\n')
-code_file.write('interval = 60 #seconds\n\n')
+code_file.write('interval = 54 #seconds and 6 seconds post delay\n\n')
 
 code_file.write("internet = 'google.com'\n")
 code_file.write("url_measurements = 'http://ec2-18-228-191-79.sa-east-1.compute.amazonaws.com:8080/api/iot/medicoes'\n\n")
