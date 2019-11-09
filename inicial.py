@@ -131,7 +131,7 @@ while(isvalid):
 
 device = str(jsonToPython['listData'][device_number-1][0])
 
-condition = 'humidity > 60'
+condition = 'humidity > 60 or temperature < 13 or temperature > 18'
 
 code_file = open("code.py", "w")
 code_file.write('#!/usr/bin/python\n\n')
