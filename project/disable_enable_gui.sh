@@ -11,7 +11,7 @@ BOOT_BEHAVIOUR=$1
 #B3 GUI
 #B4 GUI authenticated to pi user (PI OS Full default)
 
-if [ $EUID -ne 0 ]; then #delete users and user's folder equire root privileges
+if [ $EUID -ne 0 ]; then #change the boot behaviour equire root privileges
     echo 'No root privileges detected!'
     echo 'Please, run this script as root'
 else
