@@ -1,8 +1,6 @@
 <?php
-	require_once("database_connection.php");
 
-	if (isset($_GET["id"]))
-	{	
+	if (isset($_GET["id"])) {	
 		$id = $_GET["id"];
 		$sql = "SELECT data_hora AS hora, temperatura, umidade, luminosidade
 		                FROM medicoes
