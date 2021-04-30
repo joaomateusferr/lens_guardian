@@ -5,7 +5,7 @@ jQuery(document).ready(function($){
   // GERAR GRÁFICOS
 
   $.ajax({
-    url: "../php/buscar_dados.php",
+    url: "../php/get_data.php",
     type: "post",
     data: {id : id},
     dataType: "json",
