@@ -1,5 +1,5 @@
 <?php
-    require_once("conexao_bd.php");
+    require_once("database_connection.php");
 
     if (isset($_POST["email"])) 
     {
@@ -11,7 +11,7 @@
                        WHERE email = '$email' 
                        AND senha = '$senha'";
         
-        $login = mysqli_query($conexao,$query_login);
+        $login = mysqli_query($connection,$query_login);
         $info = mysqli_fetch_assoc($login);
             
         if (!empty($info))
@@ -30,5 +30,5 @@
         }
     }
     $login->close();
-    mysqli_close($conexao);
+    mysqli_close($connection);
 ?>

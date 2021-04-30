@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <?php
 	session_start();
-	require_once("../php/conexao_bd.php");
+	require_once("../php/database_connection.php");
 ?>
 <html>
 	<head>
@@ -123,4 +123,4 @@
 	</body>
 </html>
 
-<?php mysqli_close($conexao); ?>
+<?php mysqli_close($connection); ?>

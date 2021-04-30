@@ -14,7 +14,7 @@ jQuery(document).ready(function($)
 
 	function atualizarDados (id) {
 		$.ajax({
-			url: "../php/buscar_atual.php",
+			url: "../php/get_last_measurement.php",
 			type: "post",
 			data: {id : id},
 			dataType: "json",
