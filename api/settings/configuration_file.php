@@ -1,5 +1,5 @@
 <?php
 
-	foreach (glob("../classes/*.php") as $filename){
+	foreach (glob("../classes/*.php") as $filename)
 		include $filename;
-	}
+	
