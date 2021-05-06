@@ -11,7 +11,7 @@ BOOT_BEHAVIOUR=$1
 #B3 GUI
 #B4 GUI authenticated to pi user (PI OS Full default)
 
-if [ $(id -u) -ne 0 ]; then #change the boot behaviour equire root privileges
+if [ $(id -u) -ne 0 ]; then #change the boot behaviour equire root privileges (root id is 0)
     echo 'No root privileges detected!'
     echo 'Please, run this script as root'
 else
