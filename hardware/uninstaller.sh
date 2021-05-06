@@ -3,7 +3,7 @@
 #Developer notes
 #for this script to work correctly it must be run as root
 
-if [ $EUID -ne 0 ]; then #delete folders equire root privileges
+if [ $(id -u) -ne 0 ]; then #delete folders equire root privileges
     echo 'No root privileges detected!'
     echo 'Please, run this script as root'
 else
