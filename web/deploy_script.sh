@@ -4,18 +4,22 @@
 PRODUCTION_ENVIRONMENT=$1
 PHP_DIR='/etc/php/'
 
-if [ -z "$PRODUCTION_ENVIRONMENT" ];then
-    PRODUCTION_ENVIRONMENT=0
-fi
-
 if [ $(id -u) -ne 0 ]; then #this screipt equire root privileges (root id is 0)
     echo 'No root privileges detected!'
     echo 'Please, run this script as root'
 else
+
+    if [ -z "$PRODUCTION_ENVIRONMENT" ];then
+        PRODUCTION_ENVIRONMENT=0
+    fi
+
     apt-get update
 
     sudo apt-get install apache2 php libapache2-mod-php
     sudo apt-get install php-soap php-xml php-curl php-opcache php-gd php-sqlite3 php-mbstring php-mysql
+    sudo apt install git
+
+    git config --global core.fileMode false
 
     if [ ! -e $PHP_DIR ];then
         echo 'PHP not installed'
@@ -59,3 +63,5 @@ else
         fi
     fi
 fi
+
+# After cloning the git repository don't forget to run the command "" in the repository folder to avoid problems with file permissions
