@@ -1,16 +1,16 @@
 #!/bin/bash
 
-FULL_NAME=$1
-EMAIL=$2
+FULL_NAME=''
+EMAIL=''
 
 if [ -z "$FULL_NAME" ] || [ -z "$EMAIL" ];then
 
     if [ -z "$FULL_NAME" ];then
-        echo 'Please, Fill in the second parameter with the developers full name'
+        echo "Please, Fill in the FULL_NAME variable with the developer's full name"
     fi
 
     if [ -z "$EMAIL" ];then
-        echo 'Please, Fill in the third parameter with the developers email'
+        echo "Please, Fill in the EMAIL variable with the developer's email"
     fi
     
 else
